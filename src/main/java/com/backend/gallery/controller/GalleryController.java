@@ -35,6 +35,7 @@ public class GalleryController {
 	}
 	@PostMapping("/videos")
 	public ResponseEntity<Map<String,String>> gallery(GalleryVideoRequestDto GalleryVideoRequest) throws Exception{
+		log.debug("Post gallerys");
 		galleryService.createVideoGallery(GalleryVideoRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
