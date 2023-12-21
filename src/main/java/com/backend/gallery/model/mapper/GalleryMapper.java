@@ -18,5 +18,7 @@ public interface GalleryMapper {
 	List<GalleryVideoDto> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 	
 	void insertGallery(GalleryDto gallery) throws SQLException;
+	
 	void insertGalleryVideo(GalleryVideoDto galleryVideo) throws SQLException;
+	void insertGalleryImage(GalleryImageDto galleryImage) throws SQLException;
 }

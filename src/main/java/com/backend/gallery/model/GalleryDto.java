@@ -15,6 +15,11 @@ public class GalleryDto {
 		this.galleryType="video";
 	}
 	
+	public GalleryDto(GalleryImageRequestDto GalleryImageRequest) {
+		this.galleryTitle=GalleryImageRequest.getGalleryTitle();
+		this.galleryType="image";
+	}
+	
 	@Override
 	public String toString() {
 		return "GalleryDto [galleryTitle=" + galleryTitle + ", galleryNo=" + galleryNo + ", galleryType=" + galleryType

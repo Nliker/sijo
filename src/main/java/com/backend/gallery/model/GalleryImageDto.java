@@ -7,10 +7,10 @@ import lombok.Setter;
 public class GalleryImageDto {
 	private String imageUri;
 	private int galleryNo;
-	private int order;
+	private int position;
 	
 	@Override
 	public String toString() {
-		return "GalleryImageDto [imageUri=" + imageUri + ", galleryNo=" + galleryNo + ", order=" + order + "]";
+		return "GalleryImageDto [imageUri=" + imageUri + ", galleryNo=" + galleryNo + ", position=" + position + "]";
 	}
 }

@@ -34,4 +34,16 @@
 			#{position}
 		)
 	</insert>
+	
+	<insert id="insertGalleryImage" parameterType="galleryImageDto">
+	insert into gallery_image(
+			image_uri,
+			gallery_no,
+			position
+		) values(
+			#{imageUri},
+			#{galleryNo},
+			#{position}
+		)
+	</insert>
 </mapper>

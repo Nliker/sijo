@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.gallery.model.GalleryImageRequestDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
 import com.backend.gallery.model.service.GalleryService;
@@ -36,9 +37,18 @@ public class GalleryController {
 	}
 	
 	@PostMapping("/videos")
-	public ResponseEntity<Map<String,String>> gallery(@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> galleryVideo(@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
 		log.debug("Post gallerys");
 		galleryService.createVideoGallery(galleryVideoRequest);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@PostMapping("/images")
+	public ResponseEntity<Map<String,String>> galleryImage(@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
+		log.debug("Post gallerys");
+		galleryService.createImageGallery(galleryImageRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
 		return ResponseEntity.ok().body(result);

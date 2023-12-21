@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.gallery.model.GalleryDto;
 import com.backend.gallery.model.GalleryImageDto;
+import com.backend.gallery.model.GalleryImageRequestDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
@@ -60,8 +61,21 @@ public class GalleryServiceImpl implements GalleryService {
 			galleryVideo.setGalleryNo(gallery.getGalleryNo());
 			galleryVideo.setPosition(i);
 			galleryVideo.setVideoUri(galleryVideoRequest.getVideoList().get(i));
-			System.out.println(galleryVideo);
 			galleryMapper.insertGalleryVideo(galleryVideo);
+		}
+	}
+	
+	@Transactional
+	@Override
+	public void createImageGallery(GalleryImageRequestDto galleryImageRequest) throws Exception {
+		GalleryDto gallery=new GalleryDto(galleryImageRequest);
+		galleryMapper.insertGallery(gallery);
+		for(int i=0;i<galleryImageRequest.getImageList().size();i++) {
+			GalleryImageDto galleryImage=new GalleryImageDto();
+			galleryImage.setGalleryNo(gallery.getGalleryNo());
+			galleryImage.setPosition(i);
+			galleryImage.setImageUri(galleryImageRequest.getImageList().get(i));
+			galleryMapper.insertGalleryImage(galleryImage);
 		}
 	}
 }
