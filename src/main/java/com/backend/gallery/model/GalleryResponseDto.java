@@ -10,6 +10,12 @@ public class GalleryResponseDto {
 	private String galleryRegTime;
 	private String thumbnailUri;
 	
+	public GalleryResponseDto(GalleryDto gallery) {
+		this.galleryNo=gallery.getGalleryNo();
+		this.galleryTitle=gallery.getGalleryTitle();
+		this.galleryRegTime=gallery.getGalleryRegTime();
+	}
+
 	@Override
 	public String toString() {
 		return "GalleryResponseDto [galleryNo=" + galleryNo + ", galleryTitle=" + galleryTitle + ", galleryRegTime="
