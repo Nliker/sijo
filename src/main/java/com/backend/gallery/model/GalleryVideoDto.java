@@ -8,6 +8,7 @@ public class GalleryVideoDto {
 	private String videoUri;
 	private int galleryNo;
 	private int order;
+
 	
 	@Override
 	public String toString() {

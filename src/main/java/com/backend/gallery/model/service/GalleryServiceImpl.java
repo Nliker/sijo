@@ -10,6 +10,7 @@ import com.backend.gallery.model.GalleryDto;
 import com.backend.gallery.model.GalleryImageDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoDto;
+import com.backend.gallery.model.GalleryVideoRequestDto;
 import com.backend.gallery.model.mapper.GalleryMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,18 @@ public class GalleryServiceImpl implements GalleryService {
 		}
 		
 		return galleryResposneList;
+	}
+
+	@Override
+	public void createVideoGallery(GalleryVideoRequestDto galleryVideoRequest) throws Exception {
+		GalleryDto gallery=new GalleryDto(galleryVideoRequest);
+		galleryMapper.insertGallery(gallery);
+		for(int i=0;i<galleryVideoRequest.getVideoList().size();i++) {
+			GalleryVideoDto galleryVideo=new GalleryVideoDto();
+			galleryVideo.setGalleryNo(gallery.getGalleryNo());
+			galleryVideo.setOrder(i);
+			galleryVideo.setVideoUri(galleryVideoRequest.getVideoList().get(i));
+			galleryMapper.insertGalleryVideo(galleryVideo);
+		}
 	}
 }

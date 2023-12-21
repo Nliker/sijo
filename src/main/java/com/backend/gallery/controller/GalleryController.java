@@ -7,11 +7,13 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.gallery.model.GalleryResponseDto;
+import com.backend.gallery.model.GalleryVideoRequestDto;
 import com.backend.gallery.model.service.GalleryService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,4 +33,12 @@ public class GalleryController {
 		result.put("galleryList",galleryService.getGalleryList(type,map));
 		return ResponseEntity.ok().body(result);
 	}
+	@PostMapping("/videos")
+	public ResponseEntity<Map<String,String>> gallery(GalleryVideoRequestDto GalleryVideoRequest) throws Exception{
+		galleryService.createVideoGallery(GalleryVideoRequest);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+
 }

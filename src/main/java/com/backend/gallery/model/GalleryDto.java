@@ -10,6 +10,11 @@ public class GalleryDto {
 	private String galleryType;
 	private String galleryRegTime;
 	
+	public GalleryDto(GalleryVideoRequestDto GalleryVideoRequest) {
+		this.galleryTitle=GalleryVideoRequest.getGalleryTitle();
+		this.galleryType="video";
+	}
+	
 	@Override
 	public String toString() {
 		return "GalleryDto [galleryTitle=" + galleryTitle + ", galleryNo=" + galleryNo + ", galleryType=" + galleryType
