@@ -6,7 +6,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.backend.gallery.model.GalleryDto;
+import com.backend.gallery.model.GalleryImageDto;
 import com.backend.gallery.model.GalleryResponseDto;
+import com.backend.gallery.model.GalleryVideoDto;
 import com.backend.gallery.model.mapper.GalleryMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -20,8 +23,29 @@ public class GalleryServiceImpl implements GalleryService {
 	
 	@Override
 	public List<GalleryResponseDto> getGalleryList(String type, Map<String, Integer> map) throws Exception {
-		List<GalleryResponseDto> gallleryList=new ArrayList<>();
-		return gallleryList;
+		List<GalleryDto> galleryList=galleryMapper.selectGallery(map.getOrDefault("page", 0)*map.getOrDefault("count", 15), map.getOrDefault("count", 15), type);
+		
+		
+		List<GalleryResponseDto> galleryResposneList=new ArrayList<>();
+		
+		if("image".equals(type)) {
+			for(GalleryDto gallery:galleryList) {
+				GalleryResponseDto galleryResponse=new GalleryResponseDto(gallery);
+				GalleryImageDto galleryImage=galleryMapper.selectOneGalleryImageByGalleryNo(gallery.getGalleryNo());
+				galleryResponse.setThumbnailUri(galleryImage.getImageUri());
+				galleryResposneList.add(galleryResponse);
+			}
+		}
+		if("video".equals(type)) {
+			for(GalleryDto gallery:galleryList) {
+				GalleryResponseDto galleryResponse=new GalleryResponseDto(gallery);
+				GalleryVideoDto galleryVideo=galleryMapper.selectOneGalleryVideoByGalleryNo(gallery.getGalleryNo());
+				String video=galleryVideo.getVideoUri().split("=")[1];
+				galleryResponse.setThumbnailUri("https://img.youtube.com/vi/"+video+"/0.jpg");
+				galleryResposneList.add(galleryResponse);
+			}
+		}
+		
+		return galleryResposneList;
 	}
-
 }
