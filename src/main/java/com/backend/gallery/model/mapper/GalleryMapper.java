@@ -12,6 +12,8 @@ import com.backend.gallery.model.GalleryVideoDto;
 @Mapper
 public interface GalleryMapper {
 	List<GalleryDto> selectGallery(int start,int count,String type) throws SQLException;
+	GalleryImageDto selectOneGalleryImageByGalleryNo(int galleryNo) throws SQLException;
+	GalleryVideoDto selectOneGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 	List<GalleryImageDto> selectGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	List<GalleryVideoDto> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 }
