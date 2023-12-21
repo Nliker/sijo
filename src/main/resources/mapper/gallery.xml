@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.gallery.model.mapper.GalleryMapper">
+	<resultMap type="galleryDto" id="galleryMap">
+		<result column="gallery_title" property="galleryTitle"></result>
+		<result column="gallery_no" property="galleryNo"></result>
+		<result column="gallery_type" property="galleryType"></result>
+		<result column="gallery_reg_time" property="galleryRegTime"></result>
+	</resultMap>
+	
+	<insert id="insertGallery" parameterType="galleryDto">
+		insert into gallerys(
+			gallery_title,
+			gallery_type
+		) values(
+			#{galleryTitle},
+			#{galleryType}
+		)
+		<selectKey resultType="int" keyProperty="galleryNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertGalleryVideo" parameterType="galleryVideoDto">
+		insert into gallery_video(
+			video_uri,
+			gallery_no,
+			position
+		) values(
+			#{videoUri},
+			#{galleryNo},
+			#{position}
+		)
+	</insert>
+</mapper>

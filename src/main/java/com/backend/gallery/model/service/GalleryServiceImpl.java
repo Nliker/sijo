@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.gallery.model.GalleryDto;
 import com.backend.gallery.model.GalleryImageDto;
@@ -49,7 +50,7 @@ public class GalleryServiceImpl implements GalleryService {
 		
 		return galleryResposneList;
 	}
-
+	@Transactional
 	@Override
 	public void createVideoGallery(GalleryVideoRequestDto galleryVideoRequest) throws Exception {
 		GalleryDto gallery=new GalleryDto(galleryVideoRequest);
@@ -57,8 +58,9 @@ public class GalleryServiceImpl implements GalleryService {
 		for(int i=0;i<galleryVideoRequest.getVideoList().size();i++) {
 			GalleryVideoDto galleryVideo=new GalleryVideoDto();
 			galleryVideo.setGalleryNo(gallery.getGalleryNo());
-			galleryVideo.setOrder(i);
+			galleryVideo.setPosition(i);
 			galleryVideo.setVideoUri(galleryVideoRequest.getVideoList().get(i));
+			System.out.println(galleryVideo);
 			galleryMapper.insertGalleryVideo(galleryVideo);
 		}
 	}
