@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.backend.exception.CustomException;
+import com.backend.exception.GalleryException;
+
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -19,5 +22,14 @@ public class ExceptionControllerAdvice {
 		log.debug("Exception: 내부 에러");
 		
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+	}
+
+	@ExceptionHandler(GalleryException.class)
+	public ResponseEntity<CustomException> handleCredentialExeption(CustomException e, Model model) {
+		log.debug("Exception type:"+e.getClass());
+		log.error("Exception 발생 : {}",e.getCode());
+		log.error("Exception 발생 : {}",e.getMsg());
+		
+		return ResponseEntity.status(e.getCode()).body(e);
 	}
 }

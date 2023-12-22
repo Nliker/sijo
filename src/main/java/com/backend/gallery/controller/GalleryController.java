@@ -72,5 +72,6 @@ public class GalleryController {
 		result.put("result","successful");
 		return ResponseEntity.ok().body(result);
 	}
+	
 
 }

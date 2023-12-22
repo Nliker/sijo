@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.backend.errorcode.GalleryErrorCode;
+import com.backend.exception.GalleryException;
 import com.backend.gallery.model.GalleryDto;
 import com.backend.gallery.model.GalleryImageDto;
 import com.backend.gallery.model.GalleryImageRequestDto;
@@ -85,6 +87,9 @@ public class GalleryServiceImpl implements GalleryService {
 	@Override
 	public GalleryJoinMediaDto getGalleryDetail(String type,int galleryNo) throws Exception {
 		GalleryDto gallery=galleryMapper.selectGalleryByNo(galleryNo);
+		if(gallery==null) {
+			throw new GalleryException(GalleryErrorCode.NotFoundGallery.getCode(), GalleryErrorCode.NotFoundGallery.getDescription());
+		}
 		GalleryJoinMediaDto galleryDetail=new GalleryJoinMediaDto(gallery);
 		if("image".equals(type)){
 			galleryDetail.setContentList(galleryMapper.selectGalleryImageByGalleryNo(galleryNo));

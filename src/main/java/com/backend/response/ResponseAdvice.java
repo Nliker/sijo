@@ -12,6 +12,8 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import com.backend.exception.CustomException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,15 +37,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         }
         
         log.debug("body class: "+body.getClass().toString());
-//        if(body instanceof ResourceRegion || body instanceof Resource) {
-//        	return body;
-//        }
-//        if(body instanceof CustomException) {//실패한 반환
-//        	CustomException Ce=(CustomException)body;
-//        	
-//        	log.debug("사용자 실패 처리");
-//        	return new ResponseDto("empty",status,Ce.getMsg());
-//        }
+
+        if(body instanceof CustomException) {//실패한 반환
+        	CustomException Ce=(CustomException)body;
+        	
+        	log.debug("사용자 실패 처리");
+        	return new ResponseDto("empty",status,Ce.getMsg());
+        }
         if(body instanceof Exception){
         	Exception e=(Exception)body;
         	
