@@ -78,10 +78,11 @@
 	</select>
 	
 	
-	<select id="selectGalleryByNo" parameterType="int" resultMap="galleryMap">
+	<select id="selectGalleryByTypeAndNo" parameterType="map" resultMap="galleryMap">
 		select * 
 		from gallerys 
 		where gallery_no=#{galleryNo}
+		and gallery_type=#{type}
 	</select>
 	
 	<select id="selectGalleryImageByGalleryNo" parameterType="int" resultType="String">
@@ -110,4 +111,13 @@
 		delete from gallerys
 		where gallery_no=#{galleryNo}
 	</delete>
+	
+	<update id="updateGalleryTitleByNo" parameterType="galleryDto">
+		update gallerys
+		set gallery_title=#{galleryTitle}
+		where gallery_no=#{galleryNo}
+	</update>
 </mapper>
+
+
+

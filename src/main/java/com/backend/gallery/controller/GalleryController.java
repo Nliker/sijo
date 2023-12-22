@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +69,24 @@ public class GalleryController {
 	public ResponseEntity<Map<String,String>> deleteGallery(@PathVariable String type,@PathVariable int galleryNo) throws Exception{
 		log.debug("Delete gallery");
 		galleryService.deleteGallery(type,galleryNo);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@PutMapping("/image/{galleryNo}")
+	public ResponseEntity<Map<String,String>> updateGalleryImage(@PathVariable int galleryNo,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
+		log.debug("Put gallery");
+		galleryService.updateGalleryImage(galleryNo,galleryImageRequest);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@PutMapping("/video/{galleryNo}")
+	public ResponseEntity<Map<String,String>> updateGalleryVideo(@PathVariable int galleryNo,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
+		log.debug("Put gallery");
+		galleryService.updateGalleryVideo(galleryNo,galleryVideoRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
 		return ResponseEntity.ok().body(result);

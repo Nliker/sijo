@@ -21,7 +21,6 @@ public interface GalleryMapper {
 	void insertGalleryVideo(GalleryVideoDto galleryVideo) throws SQLException;
 	void insertGalleryImage(GalleryImageDto galleryImage) throws SQLException;
 	
-	GalleryDto selectGalleryByNo(int gallalyNo) throws SQLException;
 	
 	List<String> selectGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	List<String> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
@@ -30,4 +29,8 @@ public interface GalleryMapper {
 	
 	void deleteGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	void deleteGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
+	
+	void updateGalleryTitleByNo(GalleryDto gallery) throws SQLException;
+	
+	GalleryDto selectGalleryByTypeAndNo(@Param("type")String type,@Param("galleryNo") int galleryNo) throws SQLException;
 }

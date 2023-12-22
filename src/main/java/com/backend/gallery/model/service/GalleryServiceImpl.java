@@ -86,7 +86,7 @@ public class GalleryServiceImpl implements GalleryService {
 	}
 	@Override
 	public GalleryJoinMediaDto getGalleryDetail(String type,int galleryNo) throws Exception {
-		GalleryDto gallery=galleryMapper.selectGalleryByNo(galleryNo);
+		GalleryDto gallery=galleryMapper.selectGalleryByTypeAndNo(type,galleryNo);
 		if(gallery==null) {
 			throw new GalleryException(GalleryErrorCode.NotFoundGallery.getCode(), GalleryErrorCode.NotFoundGallery.getDescription());
 		}
@@ -113,6 +113,50 @@ public class GalleryServiceImpl implements GalleryService {
 			galleryMapper.deleteGalleryVideoByGalleryNo(galleryNo);
 		}
 		galleryMapper.deleteGalleryByNo(galleryNo);
+		
+	}
+	@Override
+	public void updateGalleryImage(int galleryNo, GalleryImageRequestDto galleryImageRequest) throws Exception {
+		GalleryDto gallery=galleryMapper.selectGalleryByTypeAndNo("image",galleryNo);
+		if(gallery==null) {
+			throw new GalleryException(GalleryErrorCode.NotFoundGallery.getCode(), GalleryErrorCode.NotFoundGallery.getDescription());
+		}
+		gallery.setGalleryTitle(galleryImageRequest.getGalleryTitle());
+		
+		galleryMapper.updateGalleryTitleByNo(gallery);
+		
+		galleryMapper.deleteGalleryImageByGalleryNo(galleryNo);
+		
+		for(int i=0;i<galleryImageRequest.getImageList().size();i++) {
+			GalleryImageDto galleryImage=new GalleryImageDto();
+			galleryImage.setGalleryNo(gallery.getGalleryNo());
+			galleryImage.setPosition(i);
+			galleryImage.setImageUri(galleryImageRequest.getImageList().get(i));
+			galleryMapper.insertGalleryImage(galleryImage);
+		}
+		
+	}
+	@Override
+	public void updateGalleryVideo(int galleryNo, GalleryVideoRequestDto galleryVideoRequest) throws Exception {
+		GalleryDto gallery=galleryMapper.selectGalleryByTypeAndNo("video",galleryNo);
+		if(gallery==null) {
+			throw new GalleryException(GalleryErrorCode.NotFoundGallery.getCode(), GalleryErrorCode.NotFoundGallery.getDescription());
+		}
+		gallery.setGalleryTitle(galleryVideoRequest.getGalleryTitle());
+
+		galleryMapper.updateGalleryTitleByNo(gallery);
+		
+		galleryMapper.deleteGalleryVideoByGalleryNo(galleryNo);
+		
+		for(int i=0;i<galleryVideoRequest.getVideoList().size();i++) {
+			GalleryVideoDto galleryVideo=new GalleryVideoDto();
+			galleryVideo.setGalleryNo(gallery.getGalleryNo());
+			galleryVideo.setPosition(i);
+			galleryVideo.setVideoUri(galleryVideoRequest.getVideoList().get(i));
+			galleryMapper.insertGalleryVideo(galleryVideo);
+		}
+		
+		
 		
 	}
 }
