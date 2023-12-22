@@ -15,4 +15,6 @@ public interface GalleryService {
 	void createImageGallery(GalleryImageRequestDto galleryImageRequest) throws Exception;
 
 	GalleryJoinMediaDto getGalleryDetail(String type, int galleryNo) throws Exception;
+
+	void deleteGallery(String type, int galleryNo) throws Exception;
 }

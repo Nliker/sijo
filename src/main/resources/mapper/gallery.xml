@@ -96,4 +96,18 @@
 		where gallery_no=#{galleryNo}
 		order by position asc
 	</select>
+	
+	<delete id="deleteGalleryImageByGalleryNo" parameterType="int">
+		delete from gallery_image
+		where gallery_no=#{galleryNo}
+	</delete>
+	<delete id="deleteGalleryVideoByGalleryNo" parameterType="int">
+		delete from gallery_video
+		where gallery_no=#{galleryNo}
+	</delete>
+	
+	<delete id="deleteGalleryByNo">
+		delete from gallerys
+		where gallery_no=#{galleryNo}
+	</delete>
 </mapper>

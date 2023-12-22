@@ -1,5 +1,6 @@
 package com.backend.gallery.model.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,5 +97,17 @@ public class GalleryServiceImpl implements GalleryService {
 			galleryDetail.setContentList(new ArrayList<>());
 		}
 		return galleryDetail;
+	}
+	@Transactional
+	@Override
+	public void deleteGallery(String type, int galleryNo) throws Exception {
+		if("image".equals(type)){
+			galleryMapper.deleteGalleryImageByGalleryNo(galleryNo);
+		}
+		if("video".equals(type)){
+			galleryMapper.deleteGalleryVideoByGalleryNo(galleryNo);
+		}
+		galleryMapper.deleteGalleryByNo(galleryNo);
+		
 	}
 }

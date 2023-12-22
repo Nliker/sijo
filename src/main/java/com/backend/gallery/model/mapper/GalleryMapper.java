@@ -25,4 +25,9 @@ public interface GalleryMapper {
 	
 	List<String> selectGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	List<String> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
+	
+	void deleteGalleryByNo(int galleryNo) throws SQLException;
+	
+	void deleteGalleryImageByGalleryNo(int galleryNo) throws SQLException;
+	void deleteGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 }

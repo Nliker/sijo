@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,15 @@ public class GalleryController {
 		log.debug("Get gallery");
 		Map<String,GalleryJoinMediaDto> result=new HashMap<>();
 		result.put("galleryDetailInfo",galleryService.getGalleryDetail(type,gallayNo));
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@DeleteMapping("/{type}/{galleryNo}")
+	public ResponseEntity<Map<String,String>> deleteGallery(@PathVariable String type,@PathVariable int galleryNo) throws Exception{
+		log.debug("Delete gallery");
+		galleryService.deleteGallery(type,galleryNo);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
 		return ResponseEntity.ok().body(result);
 	}
 
