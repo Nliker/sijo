@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.image.model.mapper.ImageMapper">
+	<insert id="insertImage" parameterType="imageDto">
+		insert into images(
+			original_file_name,
+			save_file_name
+		) values(
+			#{originalFileName},
+			#{saveFileName}
+		)
+	</insert>
+	<delete id="deleteImage" parameterType="String">
+		delete from images
+		where save_file_name=#{saveFileName}
+	</delete>
+</mapper>

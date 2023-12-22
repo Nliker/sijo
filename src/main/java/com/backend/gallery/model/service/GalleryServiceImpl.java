@@ -26,9 +26,11 @@ public class GalleryServiceImpl implements GalleryService {
 	
 	@Override
 	public List<GalleryResponseDto> getGalleryList(String type, Map<String, Integer> map) throws Exception {
-		List<GalleryDto> galleryList=galleryMapper.selectGallery(map.getOrDefault("page", 0)*map.getOrDefault("count", 15), map.getOrDefault("count", 15), type);
-		
-		
+		int start= (Integer.parseInt(String.valueOf(map.getOrDefault("page",1))) -1) * 15;
+		int count= Integer.parseInt(String.valueOf(map.getOrDefault("count", 15)));
+
+		List<GalleryDto> galleryList=galleryMapper.selectGallery(start,count, type);
+
 		List<GalleryResponseDto> galleryResposneList=new ArrayList<>();
 		
 		if("image".equals(type)) {
@@ -43,8 +45,8 @@ public class GalleryServiceImpl implements GalleryService {
 			for(GalleryDto gallery:galleryList) {
 				GalleryResponseDto galleryResponse=new GalleryResponseDto(gallery);
 				GalleryVideoDto galleryVideo=galleryMapper.selectOneGalleryVideoByGalleryNo(gallery.getGalleryNo());
-				String video=galleryVideo.getVideoUri().split("=")[1];
-				galleryResponse.setThumbnailUri("https://img.youtube.com/vi/"+video+"/0.jpg");
+				String[] tokenList=galleryVideo.getVideoUri().split("/");
+				galleryResponse.setThumbnailUri("https://img.youtube.com/vi/"+tokenList[tokenList.length-1]+"/0.jpg");
 				galleryResposneList.add(galleryResponse);
 			}
 		}

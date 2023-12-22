@@ -10,6 +10,8 @@ public class GalleryDto {
 	private String galleryType;
 	private String galleryRegTime;
 	
+	
+	
 	public GalleryDto(GalleryVideoRequestDto GalleryVideoRequest) {
 		this.galleryTitle=GalleryVideoRequest.getGalleryTitle();
 		this.galleryType="video";
@@ -24,5 +26,13 @@ public class GalleryDto {
 	public String toString() {
 		return "GalleryDto [galleryTitle=" + galleryTitle + ", galleryNo=" + galleryNo + ", galleryType=" + galleryType
 				+ ", galleryRegTime=" + galleryRegTime + "]";
+	}
+
+	public GalleryDto(String galleryTitle, int galleryNo, String galleryType, String galleryRegTime) {
+		super();
+		this.galleryTitle = galleryTitle;
+		this.galleryNo = galleryNo;
+		this.galleryType = galleryType;
+		this.galleryRegTime = galleryRegTime;
 	}
 }

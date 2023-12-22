@@ -36,7 +36,7 @@ public class GalleryController {
 		return ResponseEntity.ok().body(result);
 	}
 	
-	@PostMapping("/videos")
+	@PostMapping("/video")
 	public ResponseEntity<Map<String,String>> galleryVideo(@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
 		log.debug("Post gallerys");
 		galleryService.createVideoGallery(galleryVideoRequest);
@@ -45,7 +45,7 @@ public class GalleryController {
 		return ResponseEntity.ok().body(result);
 	}
 	
-	@PostMapping("/images")
+	@PostMapping("/image")
 	public ResponseEntity<Map<String,String>> galleryImage(@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
 		log.debug("Post gallerys");
 		galleryService.createImageGallery(galleryImageRequest);
