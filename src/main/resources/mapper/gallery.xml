@@ -76,4 +76,24 @@
 		order by position asc 
 		limit 1;
 	</select>
+	
+	
+	<select id="selectGalleryByNo" parameterType="int" resultMap="galleryMap">
+		select * 
+		from gallerys 
+		where gallery_no=#{galleryNo}
+	</select>
+	
+	<select id="selectGalleryImageByGalleryNo" parameterType="int" resultType="String">
+		select image_uri 
+		from gallery_image
+		where gallery_no=#{galleryNo}
+		order by position asc
+	</select>
+	<select id="selectGalleryVideoByGalleryNo" parameterType="int" resultType="String">
+		select video_uri 
+		from gallery_video
+		where gallery_no=#{galleryNo}
+		order by position asc
+	</select>
 </mapper>

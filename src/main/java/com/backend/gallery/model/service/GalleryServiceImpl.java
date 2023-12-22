@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.backend.gallery.model.GalleryDto;
 import com.backend.gallery.model.GalleryImageDto;
 import com.backend.gallery.model.GalleryImageRequestDto;
+import com.backend.gallery.model.GalleryJoinMediaDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
@@ -79,5 +80,21 @@ public class GalleryServiceImpl implements GalleryService {
 			galleryImage.setImageUri(galleryImageRequest.getImageList().get(i));
 			galleryMapper.insertGalleryImage(galleryImage);
 		}
+	}
+	@Override
+	public GalleryJoinMediaDto getGalleryDetail(String type,int galleryNo) throws Exception {
+		GalleryDto gallery=galleryMapper.selectGalleryByNo(galleryNo);
+		GalleryJoinMediaDto galleryDetail=new GalleryJoinMediaDto(gallery);
+		if("image".equals(type)){
+			galleryDetail.setContentList(galleryMapper.selectGalleryImageByGalleryNo(galleryNo));
+		}
+		if("video".equals(type)){
+			galleryDetail.setContentList(galleryMapper.selectGalleryVideoByGalleryNo(galleryNo));
+		}
+
+		if (galleryDetail.getContentList()==null) {
+			galleryDetail.setContentList(new ArrayList<>());
+		}
+		return galleryDetail;
 	}
 }

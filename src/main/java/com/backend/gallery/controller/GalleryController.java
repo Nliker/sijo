@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.gallery.model.GalleryImageRequestDto;
+import com.backend.gallery.model.GalleryJoinMediaDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
 import com.backend.gallery.model.service.GalleryService;
@@ -51,6 +52,14 @@ public class GalleryController {
 		galleryService.createImageGallery(galleryImageRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@GetMapping("/{type}/{gallayNo}")
+	public ResponseEntity<Map<String,GalleryJoinMediaDto>> gallery(@PathVariable String type,@PathVariable int gallayNo) throws Exception{
+		log.debug("Get gallery");
+		Map<String,GalleryJoinMediaDto> result=new HashMap<>();
+		result.put("galleryDetailInfo",galleryService.getGalleryDetail(type,gallayNo));
 		return ResponseEntity.ok().body(result);
 	}
 

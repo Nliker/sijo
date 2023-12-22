@@ -15,11 +15,14 @@ public interface GalleryMapper {
 	List<GalleryDto> selectGallery(@Param("start") int start,@Param("count") int count,@Param("type") String type) throws SQLException;
 	GalleryImageDto selectOneGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	GalleryVideoDto selectOneGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
-	List<GalleryImageDto> selectGalleryImageByGalleryNo(int galleryNo) throws SQLException;
-	List<GalleryVideoDto> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
-	
+
 	void insertGallery(GalleryDto gallery) throws SQLException;
 	
 	void insertGalleryVideo(GalleryVideoDto galleryVideo) throws SQLException;
 	void insertGalleryImage(GalleryImageDto galleryImage) throws SQLException;
+	
+	GalleryDto selectGalleryByNo(int gallalyNo) throws SQLException;
+	
+	List<String> selectGalleryImageByGalleryNo(int galleryNo) throws SQLException;
+	List<String> selectGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 }
