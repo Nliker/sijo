@@ -3,6 +3,15 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.backend.academy.model.mapper.AcademyMapper">
+	<resultMap type="academyDto" id="academyMap">
+		<result column="academy_no" property="academyNo"></result>
+		<result column="academy_title" property="academyTitle"></result>
+		<result column="academy_content" property="academyContent"></result>
+		<result column="academy_type" property="academyType"></result>
+		<result column="academy_reg_time" property="academyRegTime"></result>
+		<result column="academy_thumbnail_uri" property="academyThumbnailUri"></result>
+	</resultMap>
+	
 	<insert id="insertAcademy" parameterType="academyDto">
 		insert into academys(academy_title,academy_content,academy_type,academy_thumbnail_uri) 
 		values(
@@ -12,7 +21,23 @@
 		#{academyThumbnailUri}
 		)
 	</insert>
-
+	
+	<select id="selectAcademy" parameterType="map" resultMap="academyMap">
+		select * from academys
+		where academy_type=#{type} 
+		order by academy_reg_time desc 
+		limit #{start},#{count}
+	</select>
+	<select id="selectAcademyCount" parameterType="String" resultType="int">
+		select count(*) from academys 
+		where academy_type=#{type}
+	</select>
+	
+	<select id="selectAcademyByTypeAndNo" parameterType="map" resultMap="academyMap">
+		select * from academys 
+		where academy_no=#{academyNo}
+		and academy_type=#{type}
+	</select>
 </mapper>
 
 

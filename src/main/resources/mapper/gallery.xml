@@ -10,13 +10,13 @@
 		<result column="gallery_reg_time" property="galleryRegTime"></result>
 	</resultMap>
 	
-	<resultMap type="GalleryImageDto" id="GalleryImageMap">
+	<resultMap type="galleryImageDto" id="galleryImageMap">
 		<result column="image_uri" property="imageUri"></result>
 		<result column="gallery_no" property="galleryNo"></result>
 		<result column="position" property="position"></result>
 	</resultMap>
 	
-	<resultMap type="GalleryVideoDto" id="GalleryVideoMap">
+	<resultMap type="galleryVideoDto" id="galleryVideoMap">
 		<result column="video_uri" property="videoUri"></result>
 		<result column="gallery_no" property="galleryNo"></result>
 		<result column="position" property="position"></result>
@@ -65,13 +65,13 @@
 		limit #{start},#{count}
 	</select>
 	
-	<select id="selectOneGalleryImageByGalleryNo" parameterType="int" resultMap="GalleryImageMap">
+	<select id="selectOneGalleryImageByGalleryNo" parameterType="int" resultMap="galleryImageMap">
 		select * from gallery_image 
 		where gallery_no=#{galleryNo}
 		order by position asc 
 		limit 1;
 	</select>
-	<select id="selectOneGalleryVideoByGalleryNo" parameterType="int" resultMap="GalleryVideoMap">
+	<select id="selectOneGalleryVideoByGalleryNo" parameterType="int" resultMap="galleryVideoMap">
 		select * from gallery_video 
 		where gallery_no=#{galleryNo}
 		order by position asc 

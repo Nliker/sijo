@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.backend.exception.AcademyException;
 import com.backend.exception.CustomException;
 import com.backend.exception.GalleryException;
 import com.backend.exception.JwtException;
@@ -46,6 +47,15 @@ public class ExceptionControllerAdvice {
 	
 	@ExceptionHandler(JwtException.class)
 	public ResponseEntity<CustomException> handleJwtException(CustomException e, Model model) {
+		log.debug("Exception type:"+e.getClass());
+		log.error("Exception 발생 : {}",e.getCode());
+		log.error("Exception 발생 : {}",e.getMsg());
+		
+		return ResponseEntity.status(e.getCode()).body(e);
+	}
+	
+	@ExceptionHandler(AcademyException.class)
+	public ResponseEntity<CustomException> handleAcademyException(CustomException e, Model model) {
 		log.debug("Exception type:"+e.getClass());
 		log.error("Exception 발생 : {}",e.getCode());
 		log.error("Exception 발생 : {}",e.getMsg());

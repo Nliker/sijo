@@ -16,11 +16,25 @@ public class AcademyDto {
 		this.academyTitle=academyRequest.getTitle();
 		this.academyContent=academyRequest.getContent();
 	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "AcademyDto [academyNo=" + academyNo + ", academyTitle=" + academyTitle + ", academyContent="
 				+ academyContent + ", academyRegTime=" + academyRegTime + ", academyType=" + academyType
 				+ ", academyThumbnailUri=" + academyThumbnailUri + "]";
+	}
+
+
+
+	public AcademyDto(int academyNo, String academyTitle, String academyContent, String academyRegTime,
+			String academyType, String academyThumbnailUri) {
+		this.academyNo = academyNo;
+		this.academyTitle = academyTitle;
+		this.academyContent = academyContent;
+		this.academyRegTime = academyRegTime;
+		this.academyType = academyType;
+		this.academyThumbnailUri = academyThumbnailUri;
 	}
 }
