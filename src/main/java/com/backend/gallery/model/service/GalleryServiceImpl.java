@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class GalleryServiceImpl implements GalleryService {
+	@Value("${defaultImage}")
+    private String defaultImage;
+	
+	
 	private final GalleryMapper galleryMapper;
 	
 	@Override
@@ -41,7 +46,12 @@ public class GalleryServiceImpl implements GalleryService {
 			for(GalleryDto gallery:galleryList) {
 				GalleryResponseDto galleryResponse=new GalleryResponseDto(gallery);
 				GalleryImageDto galleryImage=galleryMapper.selectOneGalleryImageByGalleryNo(gallery.getGalleryNo());
-				galleryResponse.setThumbnailUri(galleryImage.getImageUri());
+				if(galleryImage==null) {
+					galleryResponse.setThumbnailUri(defaultImage);
+				}
+				else {
+					galleryResponse.setThumbnailUri(galleryImage.getImageUri());
+				}
 				galleryResposneList.add(galleryResponse);
 			}
 		}
@@ -49,8 +59,13 @@ public class GalleryServiceImpl implements GalleryService {
 			for(GalleryDto gallery:galleryList) {
 				GalleryResponseDto galleryResponse=new GalleryResponseDto(gallery);
 				GalleryVideoDto galleryVideo=galleryMapper.selectOneGalleryVideoByGalleryNo(gallery.getGalleryNo());
-				String[] tokenList=galleryVideo.getVideoUri().split("/");
-				galleryResponse.setThumbnailUri("https://img.youtube.com/vi/"+tokenList[tokenList.length-1]+"/0.jpg");
+				if(galleryVideo==null) {
+					galleryResponse.setThumbnailUri(defaultImage);
+				}
+				else {
+					String[] tokenList=galleryVideo.getVideoUri().split("/");
+					galleryResponse.setThumbnailUri("https://img.youtube.com/vi/"+tokenList[tokenList.length-1]+"/0.jpg");
+				}
 				galleryResposneList.add(galleryResponse);
 			}
 		}
