@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.backend.exception.CustomException;
 import com.backend.exception.GalleryException;
+import com.backend.exception.JwtException;
 import com.backend.exception.UserException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,15 @@ public class ExceptionControllerAdvice {
 	
 	@ExceptionHandler(UserException.class)
 	public ResponseEntity<CustomException> handleUserException(CustomException e, Model model) {
+		log.debug("Exception type:"+e.getClass());
+		log.error("Exception 발생 : {}",e.getCode());
+		log.error("Exception 발생 : {}",e.getMsg());
+		
+		return ResponseEntity.status(e.getCode()).body(e);
+	}
+	
+	@ExceptionHandler(JwtException.class)
+	public ResponseEntity<CustomException> handleJwtException(CustomException e, Model model) {
 		log.debug("Exception type:"+e.getClass());
 		log.error("Exception 발생 : {}",e.getCode());
 		log.error("Exception 발생 : {}",e.getMsg());

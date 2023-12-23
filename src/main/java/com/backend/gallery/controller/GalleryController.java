@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import com.backend.gallery.model.GalleryJoinMediaDto;
 import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
 import com.backend.gallery.model.service.GalleryService;
+import com.backend.jwt.JwtService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class GalleryController {
 	private final GalleryService galleryService;
-	
+	private final JwtService jwtService;
 	@GetMapping("/{type}")
 	public ResponseEntity<Map<String,List<GalleryResponseDto>>> gallerys(@PathVariable String type,@RequestParam Map<String, Integer> map) throws Exception{
 		log.debug("Get gallerys");
@@ -40,8 +42,9 @@ public class GalleryController {
 	}
 	
 	@PostMapping("/video")
-	public ResponseEntity<Map<String,String>> galleryVideo(@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> galleryVideo(@RequestHeader("access_token") String access_token,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
 		log.debug("Post gallerys");
+		jwtService.validate(access_token);
 		galleryService.createVideoGallery(galleryVideoRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
@@ -49,7 +52,7 @@ public class GalleryController {
 	}
 	
 	@PostMapping("/image")
-	public ResponseEntity<Map<String,String>> galleryImage(@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> galleryImage(@RequestHeader("access_token") String access_token,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
 		log.debug("Post gallerys");
 		galleryService.createImageGallery(galleryImageRequest);
 		Map<String,String> result=new HashMap<>();
