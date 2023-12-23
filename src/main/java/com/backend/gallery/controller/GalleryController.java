@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +43,10 @@ public class GalleryController {
 	}
 	
 	@PostMapping("/video")
-	public ResponseEntity<Map<String,String>> galleryVideo(@RequestHeader("access_token") String access_token,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> galleryVideo(@CookieValue(value = "access_token",required = false) String access_token,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
 		log.debug("Post gallerys");
 		jwtService.validate(access_token);
+		
 		galleryService.createVideoGallery(galleryVideoRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
@@ -52,8 +54,10 @@ public class GalleryController {
 	}
 	
 	@PostMapping("/image")
-	public ResponseEntity<Map<String,String>> galleryImage(@RequestHeader("access_token") String access_token,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> galleryImage(@CookieValue(value = "access_token",required = false) String access_token,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
 		log.debug("Post gallerys");
+		jwtService.validate(access_token);
+		
 		galleryService.createImageGallery(galleryImageRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
@@ -69,8 +73,10 @@ public class GalleryController {
 	}
 	
 	@DeleteMapping("/{type}/{galleryNo}")
-	public ResponseEntity<Map<String,String>> deleteGallery(@PathVariable String type,@PathVariable int galleryNo) throws Exception{
+	public ResponseEntity<Map<String,String>> deleteGallery(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable String type,@PathVariable int galleryNo) throws Exception{
 		log.debug("Delete gallery");
+		jwtService.validate(access_token);
+		
 		galleryService.deleteGallery(type,galleryNo);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
@@ -78,8 +84,10 @@ public class GalleryController {
 	}
 	
 	@PutMapping("/image/{galleryNo}")
-	public ResponseEntity<Map<String,String>> updateGalleryImage(@PathVariable int galleryNo,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> updateGalleryImage(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable int galleryNo,@RequestBody GalleryImageRequestDto galleryImageRequest) throws Exception{
 		log.debug("Put gallery");
+		jwtService.validate(access_token);
+		
 		galleryService.updateGalleryImage(galleryNo,galleryImageRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
@@ -87,8 +95,10 @@ public class GalleryController {
 	}
 	
 	@PutMapping("/video/{galleryNo}")
-	public ResponseEntity<Map<String,String>> updateGalleryVideo(@PathVariable int galleryNo,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> updateGalleryVideo(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable int galleryNo,@RequestBody GalleryVideoRequestDto galleryVideoRequest) throws Exception{
 		log.debug("Put gallery");
+		jwtService.validate(access_token);
+		
 		galleryService.updateGalleryVideo(galleryNo,galleryVideoRequest);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");

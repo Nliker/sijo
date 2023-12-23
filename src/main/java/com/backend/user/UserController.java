@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.jwt.JwtService;
 import com.backend.user.model.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserController {
 		private final UserService userService;
+		private final JwtService jwtService;
 		
 		@PostMapping("/login")
 		public ResponseEntity<Map<String,String>> userLogin(@RequestBody Map<String,String> userPasswordMap) throws Exception{
@@ -32,8 +35,10 @@ public class UserController {
 		}
 		
 		@PutMapping("/mypassword")
-		public ResponseEntity<Map<String,String>> userPassword(@RequestBody Map<String,String> userPasswordMap) throws Exception{
+		public ResponseEntity<Map<String,String>> userPassword(@CookieValue(value = "access_token",required = false) String access_token,@RequestBody Map<String,String> userPasswordMap) throws Exception{
 			log.debug("Put UserPassword");
+			jwtService.validate(access_token);
+			
 			userService.changePassword(userPasswordMap.get("password"), userPasswordMap.get("changePassword"));
 			Map<String,String> result=new HashMap<>();
 			result.put("result","successful");

@@ -54,7 +54,7 @@ public class JwtService {
     
     public void validate(String token) throws Exception{
     	System.out.println(token);
-    	if (token==null) {
+    	if (token==null || "".equals(token) ) {
     		throw new JwtException(JwtErrorCode.JwtReqired.getCode(),JwtErrorCode.JwtReqired.getDescription());
     	}
     	try {

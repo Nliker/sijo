@@ -61,6 +61,7 @@
 	<select id="selectGallery" parameterType="map" resultMap="galleryMap">
 		select * from gallerys 
 		where gallery_type=#{type}
+		order by gallery_reg_time desc
 		limit #{start},#{count}
 	</select>
 	
