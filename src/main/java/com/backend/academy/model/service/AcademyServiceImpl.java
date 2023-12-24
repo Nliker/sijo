@@ -72,6 +72,26 @@ public class AcademyServiceImpl implements AcademyService{
 		return new AcademyDetailDto(academy);
 	}
 
+	@Override
+	public void updateAcademy(AcademyReqeustDto academyRequest, String type, int academyNo) throws Exception {
+		AcademyDto academy=academyMapper.selectAcademyByTypeAndNo(type, academyNo);
+		if(academy==null) {
+			throw new AcademyException(AcademyErrorCode.NotFoundAcademy.getCode(),AcademyErrorCode.NotFoundAcademy.getDescription());
+		}
+		
+		AcademyDto updateAcademy=new AcademyDto(academyRequest);
+		updateAcademy.setAcademyType(type);
+		String thumbnailUri=academyRequest.getThumbnailUri();
+		if("".equals(thumbnailUri) || thumbnailUri==null) {
+			updateAcademy.setAcademyThumbnailUri(defaultImage);
+		}else {
+			updateAcademy.setAcademyThumbnailUri(thumbnailUri);
+		}
+		updateAcademy.setAcademyNo(academyNo);
+		
+		academyMapper.updateAcademyByNo(updateAcademy);
+	}
+
 	
 	
 	

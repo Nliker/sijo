@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,9 +33,9 @@ public class AcademyController {
 	private final JwtService jwtService;
 	
 	@PostMapping("/{type}")
-	public ResponseEntity<Map<String,String>> academy(@PathVariable String type,@RequestBody AcademyReqeustDto academyRequest) throws Exception{
+	public ResponseEntity<Map<String,String>> academy(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable String type,@RequestBody AcademyReqeustDto academyRequest) throws Exception{
 		log.debug("Post Academy");
-//		jwtService.validate(access_token);
+		jwtService.validate(access_token);
 		
 		academyService.createAcademy(academyRequest,type);
 		Map<String,String> result=new HashMap<>();
@@ -66,6 +67,17 @@ public class AcademyController {
 		
 		Map<String,AcademyDetailDto> result=new HashMap<>();
 		result.put("academyDetailInfo",academyService.getAcademy(type,academyNo));
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@PutMapping("/{type}/{academyNo}")
+	public ResponseEntity<Map<String,String>> updateAcademy(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable String type,@PathVariable int academyNo,@RequestBody AcademyReqeustDto academyRequest) throws Exception{
+		log.debug("Put Academy");
+		jwtService.validate(access_token);
+		
+		academyService.updateAcademy(academyRequest,type,academyNo);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
 		return ResponseEntity.ok().body(result);
 	}
 }

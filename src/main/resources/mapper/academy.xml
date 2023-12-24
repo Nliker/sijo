@@ -38,6 +38,15 @@
 		where academy_no=#{academyNo}
 		and academy_type=#{type}
 	</select>
+	
+	<update id="updateAcademyByNo" parameterType="academyDto">
+		update academys 
+		set academy_title=#{academyTitle},
+		academy_content=#{academyContent},
+		academy_thumbnail_uri=#{academyThumbnailUri} 
+		where academy_type=#{academyType} 
+		and academy_no=#{academyNo}
+	</update>
 </mapper>
 
 
