@@ -65,8 +65,11 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 
 	@Override
-	public int getAcademyTotalPage(String type) throws Exception{
-		return (int) Math.max(Math.ceil(((double)academyMapper.selectAcademyCount(type))/academyDefaultPage),1);
+	public int getAcademyTotalPage(String type,Map<String,String> map) throws Exception{
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("type",type);
+		param.put("title", map.getOrDefault("title", ""));
+		return (int) Math.max(Math.ceil(((double)academyMapper.selectAcademyCount(param))/academyDefaultPage),1);
 	}
 
 	@Override

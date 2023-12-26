@@ -36,9 +36,10 @@
 		</choose>
 		limit #{start},#{count}
 	</select>
-	<select id="selectAcademyCount" parameterType="String" resultType="int">
+	<select id="selectAcademyCount" parameterType="map" resultType="int">
 		select count(*) from academys 
-		where academy_type=#{type}
+		where academy_type=#{type} 
+		and academy_title like concat('%', #{title}, '%')
 	</select>
 	
 	<select id="selectAcademyByTypeAndNo" parameterType="map" resultMap="academyMap">

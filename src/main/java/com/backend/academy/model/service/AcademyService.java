@@ -13,7 +13,7 @@ public interface AcademyService {
 
 	List<AcademyResponseDto> getAcademyList(String type, Map<String, String> map) throws Exception;
 
-	int getAcademyTotalPage(String type) throws Exception;
+	int getAcademyTotalPage(String type,Map<String, String> map) throws Exception;
 
 	AcademyDetailDto getAcademy(String type, int academyNo) throws Exception;
 

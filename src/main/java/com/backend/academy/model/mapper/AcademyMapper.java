@@ -16,7 +16,7 @@ public interface AcademyMapper {
 
 	List<AcademyDto> selectAcademy(Map<String,Object> param) throws SQLException;
 
-	int selectAcademyCount(String type) throws SQLException;
+	int selectAcademyCount(Map<String, String> param) throws SQLException;
 	
 	AcademyDto selectAcademyByTypeAndNo(@Param("type")String type,@Param("academyNo") int academyNo) throws SQLException;
 

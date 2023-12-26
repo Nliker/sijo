@@ -54,11 +54,11 @@ public class AcademyController {
 	}
 	
 	@GetMapping("/{type}/page")
-	public ResponseEntity<Map<String,Integer>> academyPage(@PathVariable String type) throws Exception{
+	public ResponseEntity<Map<String,Integer>> academyPage(@PathVariable String type,@RequestParam Map<String, String> map) throws Exception{
 		log.debug("Get Academy");
 		
 		Map<String,Integer> result=new HashMap<>();
-		result.put("academyTotalPage",academyService.getAcademyTotalPage(type));
+		result.put("academyTotalPage",academyService.getAcademyTotalPage(type,map));
 		return ResponseEntity.ok().body(result);
 	}
 	
