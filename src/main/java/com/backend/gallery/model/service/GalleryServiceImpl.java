@@ -2,6 +2,7 @@ package com.backend.gallery.model.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,15 +31,23 @@ public class GalleryServiceImpl implements GalleryService {
 	@Value("${defaultImage}")
     private String defaultImage;
 	
+	@Value("${galleryDefaultPage}")
+	private int galleryDefaultPage;
+	
 	
 	private final GalleryMapper galleryMapper;
 	
 	@Override
-	public List<GalleryResponseDto> getGalleryList(String type, Map<String, Integer> map) throws Exception {
-		int start= (Integer.parseInt(String.valueOf(map.getOrDefault("page",1))) -1) * 15;
-		int count= Integer.parseInt(String.valueOf(map.getOrDefault("count", 15)));
-
-		List<GalleryDto> galleryList=galleryMapper.selectGallery(start,count, type);
+	public List<GalleryResponseDto> getGalleryList(String type, Map<String, String> map) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("start", (Integer.parseInt(map.getOrDefault("page","1"))-1)*galleryDefaultPage);
+		param.put("count",Integer.parseInt(map.getOrDefault("count", String.valueOf(galleryDefaultPage))));
+		param.put("title",map.getOrDefault("title", ""));
+		param.put("order", map.getOrDefault("order","latest"));
+		param.put("type",type);
+		log.debug(param.toString());
+		
+		List<GalleryDto> galleryList=galleryMapper.selectGallery(param);
 
 		List<GalleryResponseDto> galleryResposneList=new ArrayList<>();
 		

@@ -9,7 +9,7 @@ import com.backend.gallery.model.GalleryResponseDto;
 import com.backend.gallery.model.GalleryVideoRequestDto;
 
 public interface GalleryService {
-	List<GalleryResponseDto> getGalleryList(String type,Map<String,Integer> map) throws Exception;
+	List<GalleryResponseDto> getGalleryList(String type,Map<String, String> map) throws Exception;
 
 	void createVideoGallery(GalleryVideoRequestDto galleryVideoRequest) throws Exception;
 	void createImageGallery(GalleryImageRequestDto galleryImageRequest) throws Exception;

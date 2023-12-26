@@ -2,6 +2,7 @@ package com.backend.gallery.model.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,7 +13,7 @@ import com.backend.gallery.model.GalleryVideoDto;
 
 @Mapper
 public interface GalleryMapper {
-	List<GalleryDto> selectGallery(@Param("start") int start,@Param("count") int count,@Param("type") String type) throws SQLException;
+	List<GalleryDto> selectGallery(Map<String, Object> param) throws SQLException;
 	GalleryImageDto selectOneGalleryImageByGalleryNo(int galleryNo) throws SQLException;
 	GalleryVideoDto selectOneGalleryVideoByGalleryNo(int galleryNo) throws SQLException;
 

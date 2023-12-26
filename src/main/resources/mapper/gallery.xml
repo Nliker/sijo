@@ -60,8 +60,16 @@
 	</insert> 
 	<select id="selectGallery" parameterType="map" resultMap="galleryMap">
 		select * from gallerys 
-		where gallery_type=#{type}
-		order by gallery_reg_time desc
+		where gallery_type=#{type} 
+		and gallery_title like concat('%', #{title}, '%') 
+		<choose>
+			<when test='order!=null and "old".equals(order)'>
+				order by gallery_reg_time asc 
+			</when>
+			<otherwise>
+				order by gallery_reg_time desc 
+			</otherwise>
+		</choose>
 		limit #{start},#{count}
 	</select>
 	

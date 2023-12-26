@@ -35,7 +35,7 @@ public class GalleryController {
 	private final GalleryService galleryService;
 	private final JwtService jwtService;
 	@GetMapping("/{type}")
-	public ResponseEntity<Map<String,List<GalleryResponseDto>>> gallerys(@PathVariable String type,@RequestParam Map<String, Integer> map) throws Exception{
+	public ResponseEntity<Map<String,List<GalleryResponseDto>>> gallerys(@PathVariable String type,@RequestParam Map<String, String> map) throws Exception{
 		log.debug("Get gallerys");
 		Map<String,List<GalleryResponseDto>> result=new HashMap<>();
 		result.put("galleryList",galleryService.getGalleryList(type,map));
