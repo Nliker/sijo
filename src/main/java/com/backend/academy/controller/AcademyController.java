@@ -45,7 +45,7 @@ public class AcademyController {
 	}
 	
 	@GetMapping("/{type}")
-	public ResponseEntity<Map<String,List<AcademyResponseDto>>> academy(@PathVariable String type,@RequestParam Map<String, Integer> map) throws Exception{
+	public ResponseEntity<Map<String,List<AcademyResponseDto>>> academy(@PathVariable String type,@RequestParam Map<String, String> map) throws Exception{
 		log.debug("Get Academy");
 		
 		Map<String,List<AcademyResponseDto>> result=new HashMap<>();

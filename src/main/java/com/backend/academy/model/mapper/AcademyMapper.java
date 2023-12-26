@@ -2,6 +2,7 @@ package com.backend.academy.model.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ public interface AcademyMapper {
 
 	void insertAcademy(AcademyDto academyDto) throws SQLException;
 
-	List<AcademyDto> selectAcademy(@Param("start") int start,@Param("count") int count,@Param("type") String type) throws SQLException;
+	List<AcademyDto> selectAcademy(Map<String,Object> param) throws SQLException;
 
 	int selectAcademyCount(String type) throws SQLException;
 	

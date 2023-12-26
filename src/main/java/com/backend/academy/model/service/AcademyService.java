@@ -11,7 +11,7 @@ public interface AcademyService {
 
 	void createAcademy(AcademyReqeustDto academyRequest, String type) throws Exception;
 
-	List<AcademyResponseDto> getAcademyList(String type, Map<String, Integer> map) throws Exception;
+	List<AcademyResponseDto> getAcademyList(String type, Map<String, String> map) throws Exception;
 
 	int getAcademyTotalPage(String type) throws Exception;
 

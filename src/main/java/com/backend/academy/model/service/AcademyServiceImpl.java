@@ -1,6 +1,7 @@
 package com.backend.academy.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,11 +45,16 @@ public class AcademyServiceImpl implements AcademyService{
 	}
 
 	@Override
-	public List<AcademyResponseDto> getAcademyList(String type, Map<String, Integer> map) throws Exception{
-		int start= (Integer.parseInt(String.valueOf(map.getOrDefault("page",1))) -1) * academyDefaultPage;
-		int count= academyDefaultPage;
-
-		List<AcademyDto> academyList=academyMapper.selectAcademy(start,count, type);
+	public List<AcademyResponseDto> getAcademyList(String type, Map<String, String> map) throws Exception{
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("start", (Integer.parseInt(map.getOrDefault("page","1"))-1)*academyDefaultPage);
+		param.put("count",Integer.parseInt(map.getOrDefault("count", String.valueOf(academyDefaultPage))));
+		
+		param.put("title",map.getOrDefault("title", ""));
+		param.put("order", map.getOrDefault("order","latest"));
+		param.put("type",type);
+		
+		List<AcademyDto> academyList=academyMapper.selectAcademy(param);
 		List<AcademyResponseDto> academyResposneList=new ArrayList<>();
 		for(AcademyDto academy:academyList) {
 			System.out.println(academy);

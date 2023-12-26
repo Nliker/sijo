@@ -25,7 +25,15 @@
 	<select id="selectAcademy" parameterType="map" resultMap="academyMap">
 		select * from academys
 		where academy_type=#{type} 
-		order by academy_reg_time desc 
+		and academy_title like concat('%', #{title}, '%') 
+		<choose>
+			<when test='order!=null and "old".equals(order)'>
+				order by academy_reg_time asc 
+			</when>
+			<otherwise>
+				order by academy_reg_time desc 
+			</otherwise>
+		</choose>
 		limit #{start},#{count}
 	</select>
 	<select id="selectAcademyCount" parameterType="String" resultType="int">
