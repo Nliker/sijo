@@ -18,4 +18,6 @@ public interface AcademyService {
 	AcademyDetailDto getAcademy(String type, int academyNo) throws Exception;
 
 	void updateAcademy(AcademyReqeustDto academyRequest, String type, int academyNo) throws Exception;
+
+	void deleteAcademy(String type, int academyNo) throws Exception;
 }

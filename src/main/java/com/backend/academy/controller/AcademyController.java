@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,6 +77,17 @@ public class AcademyController {
 		jwtService.validate(access_token);
 		
 		academyService.updateAcademy(academyRequest,type,academyNo);
+		Map<String,String> result=new HashMap<>();
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@DeleteMapping("/{type}/{academyNo}")
+	public ResponseEntity<Map<String,String>> updateAcademy(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable String type,@PathVariable int academyNo) throws Exception{
+		log.debug("Delete Academy");
+		jwtService.validate(access_token);
+		
+		academyService.deleteAcademy(type,academyNo);
 		Map<String,String> result=new HashMap<>();
 		result.put("result","successful");
 		return ResponseEntity.ok().body(result);

@@ -17,7 +17,9 @@ public interface AcademyMapper {
 
 	int selectAcademyCount(String type) throws SQLException;
 	
-	AcademyDto selectAcademyByTypeAndNo(@Param("type")String type,@Param("academyNo") int galleryNo) throws SQLException;
+	AcademyDto selectAcademyByTypeAndNo(@Param("type")String type,@Param("academyNo") int academyNo) throws SQLException;
 
 	void updateAcademyByNo(AcademyDto updateAcademy) throws SQLException;
+
+	void deleteAcademyByNo(@Param("type")String type,@Param("academyNo") int academyNo) throws SQLException;
 }

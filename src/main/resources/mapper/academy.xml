@@ -47,6 +47,12 @@
 		where academy_type=#{academyType} 
 		and academy_no=#{academyNo}
 	</update>
+	
+	<delete id="deleteAcademyByNo" parameterType="map">
+		delete from academys 
+		where academy_type=#{type} 
+		and academy_no=#{academyNo}
+	</delete>
 </mapper>
 
 

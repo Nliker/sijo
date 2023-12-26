@@ -92,6 +92,11 @@ public class AcademyServiceImpl implements AcademyService{
 		academyMapper.updateAcademyByNo(updateAcademy);
 	}
 
+	@Override
+	public void deleteAcademy(String type, int academyNo) throws Exception {
+		academyMapper.deleteAcademyByNo(type,academyNo);
+	}
+
 	
 	
 	
