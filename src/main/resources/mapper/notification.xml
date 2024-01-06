@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.notification.model.mapper.NotificationMapper">
+
+	<resultMap type="notificationDto" id="notificationMap">
+		<result column="notification_no" property="notificationNo"></result>
+		<result column="notification_title" property="notificationTitle"></result>
+		<result column="notification_reg_time" property="notificationRegTime"></result>
+	</resultMap>
+	
+	<insert id="insertNotification" parameterType="notificationDto">
+		insert into notifications(
+			notification_title,
+			notification_content
+		) values(
+			#{notificationTitle},
+			#{notificationContent}
+		)
+		<selectKey resultType="int" keyProperty="notificationNo" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+
+	<insert id="insertNotificationFile" parameterType="notificationFileDto">
+		insert into notification_file(
+			file_uri,
+			notification_no,
+			file_name,
+			position
+		) values(
+			#{fileUri},
+			#{notificationNo},
+			#{fileName},
+			#{position}
+		)
+	</insert>
+	
+	<select id="selectNotification" parameterType="map" resultMap="notificationMap">
+		select * from notifications
+		where notification_title like concat('%', #{title}, '%') 
+		<choose>
+			<when test='order!=null and "old".equals(order)'>
+				order by notification_reg_time asc 
+			</when>
+			<otherwise>
+				order by notification_reg_time desc 
+			</otherwise>
+		</choose>
+		limit #{start},#{count}
+	</select>
+	<select id="selectNotificationCount" parameterType="map" resultType="int">
+		select count(*) from notifications 
+		where notification_title like concat('%', #{title}, '%')
+	</select>
+	
+</mapper>

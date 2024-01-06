@@ -8,8 +8,8 @@ import lombok.Setter;
 public class NotificationDto {
 	private int notificationNo;
 	private String notificationTitle;
-	private String notificationCotent;
-	private String notificationRegDate;
+	private String notificationContent;
+	private String notificationRegTime;
 	
 	public NotificationDto() {
 		super();
@@ -17,13 +17,15 @@ public class NotificationDto {
 	
 	public NotificationDto(NotificationRequestDto notificationRequest) {
 		this.notificationTitle=notificationRequest.getTitle();
-		this.notificationCotent=notificationRequest.getContent();
+		this.notificationContent=notificationRequest.getContent();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "NotificationDto [notificationNo=" + notificationNo + ", notificationTitle=" + notificationTitle
-				+ ", notificationCotent=" + notificationCotent + ", notificationRegDate=" + notificationRegDate + "]";
+				+ ", notificationContent=" + notificationContent + ", notificationRegTime=" + notificationRegTime + "]";
 	}
+	
+	
 
 }
