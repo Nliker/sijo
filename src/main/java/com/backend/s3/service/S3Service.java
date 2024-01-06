@@ -4,5 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface S3Service {
 	public String uploadImage(MultipartFile multipartFile) throws Exception;
+	public String uploadFile(MultipartFile multipartFile) throws Exception;
 	public void deleteImage(String saveFileName) throws Exception;
 }

@@ -34,8 +34,23 @@ public class S3ServiceImpl implements S3Service{
         imageMapper.insertImage(image);
         return amazonS3.getUrl(bucket, saveFileName).toString();
     }
+    
+
     public void deleteImage(String saveFileName) throws Exception  {
     	imageMapper.deleteImage(saveFileName);
         amazonS3.deleteObject(bucket, saveFileName);
     }
+
+
+	@Override
+	public String uploadFile(MultipartFile multipartFile) throws Exception {
+		String originalFileName = multipartFile.getOriginalFilename();
+        String saveFileName=UUID.randomUUID().toString()+"-"+originalFileName;
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentLength(multipartFile.getSize());
+        metadata.setContentType(multipartFile.getContentType());
+
+        amazonS3.putObject(bucket, saveFileName, multipartFile.getInputStream(), metadata);
+        return amazonS3.getUrl(bucket, saveFileName).toString();
+	}
 }
