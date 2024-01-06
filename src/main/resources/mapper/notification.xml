@@ -5,9 +5,23 @@
 <mapper namespace="com.backend.notification.model.mapper.NotificationMapper">
 
 	<resultMap type="notificationDto" id="notificationMap">
-		<result column="notification_no" property="notificationNo"></result>
+		<id column="notification_no" property="notificationNo"></id>
 		<result column="notification_title" property="notificationTitle"></result>
 		<result column="notification_reg_time" property="notificationRegTime"></result>
+		<result column="notification_content" property="notificationContent"></result>
+	</resultMap>
+	
+	<resultMap type="notificationFileDetailDto" id="notificationFileDetailMap">
+		<result column="file_uri" property="fileUri"></result>
+		<result column="file_name" property="fileName"></result>
+	</resultMap>
+	
+	<resultMap type="notificationJoinFileDto" id="notificationJoinFileMap">
+		<id column="notification_no"></id>
+		<result column="notification_title" property="notificationTitle"></result>
+		<result column="notification_reg_time" property="notificationRegTime"></result>
+		<result column="notification_content" property="notificationContent"></result>
+		<collection property="notificationFileList" resultMap="notificationFileDetailMap"/>
 	</resultMap>
 	
 	<insert id="insertNotification" parameterType="notificationDto">
@@ -76,4 +90,12 @@
 		where file_uri=#{fileUri}
 	</delete>
 	
+	<select id="selectNotificationJoinFileByNo" parameterType="int" resultMap="notificationJoinFileMap">
+		select * 
+		from notifications n
+		join notification_file nf 
+		on n.notification_no=nf.notification_no 
+		where n.notification_no=#{notificationNo}
+		order by nf.position;
+	</select>
 </mapper>

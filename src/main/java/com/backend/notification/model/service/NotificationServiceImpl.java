@@ -23,6 +23,7 @@ import com.backend.exception.NotificationException;
 import com.backend.gallery.model.GalleryJoinMediaDto;
 import com.backend.notification.model.NotificationDto;
 import com.backend.notification.model.NotificationFileDto;
+import com.backend.notification.model.NotificationJoinFileDto;
 import com.backend.notification.model.NotificationRequestDto;
 import com.backend.notification.model.NotificationResponseDto;
 import com.backend.notification.model.NotificationUpdateReqeustDto;
@@ -114,6 +115,19 @@ public class NotificationServiceImpl implements NotificationService{
 			notificationFile.setPosition(curMaxPosition+i);
 			notificationMapper.insertNotificationFile(notificationFile);
 		}
+	}
+
+	@Override
+	public NotificationJoinFileDto getNotification(int notificationNo) throws Exception {
+		NotificationDto notification=notificationMapper.selectNotificationByNo(notificationNo);
+		if(notification==null) {
+			throw new NotificationException(NotificationErrorCode.NotFoundNotification.getCode(),NotificationErrorCode.NotFoundNotification.getDescription());
+		}
+		
+		NotificationJoinFileDto notificationJoinFile=notificationMapper.selectNotificationJoinFileByNo(notificationNo);
+		log.debug("notificationJoinFile: "+notificationJoinFile);
+		
+		return notificationJoinFile;
 	}
 
 }

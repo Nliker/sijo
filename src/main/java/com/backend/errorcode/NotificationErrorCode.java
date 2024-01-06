@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum NotificationErrorCode {
-	NotFoundNotification(404,"해당 갤러리는 존재하지 않습니다.");
+	NotFoundNotification(404,"해당 공지사항은 존재하지 않습니다.");
 	
 	private int code;
     private String description;

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.backend.notification.model.NotificationDto;
 import com.backend.notification.model.NotificationFileDto;
+import com.backend.notification.model.NotificationJoinFileDto;
 
 @Mapper
 public interface NotificationMapper {
@@ -19,4 +20,5 @@ public interface NotificationMapper {
 	void updateNotificationByNo(NotificationDto updateNotification) throws SQLException;
 	void deleteNotificationFile(String deleteId) throws SQLException;
 	int selectNotificationFileMaxPosition(int notificationNo) throws SQLException;
+	NotificationJoinFileDto selectNotificationJoinFileByNo(int notificationNo) throws SQLException;
 }
