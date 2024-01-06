@@ -10,6 +10,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.backend.image.model.ImageDto;
 import com.backend.image.model.mapper.ImageMapper;
+import com.backend.notification.model.mapper.NotificationMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class S3ServiceImpl implements S3Service{
 	private final AmazonS3 amazonS3;
 	private final ImageMapper imageMapper;
+	private final NotificationMapper notificationMapper;
 	
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -51,6 +53,12 @@ public class S3ServiceImpl implements S3Service{
         metadata.setContentType(multipartFile.getContentType());
 
         amazonS3.putObject(bucket, saveFileName, multipartFile.getInputStream(), metadata);
-        return amazonS3.getUrl(bucket, saveFileName).toString();
+        return saveFileName;
+	}
+
+
+	public void deleteFile(String deleteId) throws Exception {
+		notificationMapper.deleteNotificationFile(deleteId);
+        amazonS3.deleteObject(bucket, deleteId);
 	}
 }

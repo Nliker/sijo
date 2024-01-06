@@ -1,6 +1,5 @@
 package com.backend.notification.model.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +11,9 @@ import com.backend.notification.model.NotificationUpdateReqeustDto;
 public interface NotificationService {
 	void createNotification(NotificationRequestDto notificationRequest, MultipartFile[] files) throws Exception;
 
-	List<NotificationResponseDto> getNotificationList(Map<String, String> map) throws SQLException;
+	List<NotificationResponseDto> getNotificationList(Map<String, String> map) throws Exception;
 
-	Integer getNotificationTotalPage(Map<String, String> map) throws SQLException;
+	Integer getNotificationTotalPage(Map<String, String> map) throws Exception;
 
-	void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList ,int notificationNo);
+	void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList ,int notificationNo) throws Exception;
 }

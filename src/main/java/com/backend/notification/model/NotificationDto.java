@@ -20,6 +20,11 @@ public class NotificationDto {
 		this.notificationContent=notificationRequest.getContent();
 	}
 
+	public NotificationDto(NotificationUpdateReqeustDto notificationUpdateReqeust) {
+		this.notificationTitle=notificationUpdateReqeust.getTitle();
+		this.notificationContent=notificationUpdateReqeust.getContent();
+	}
+
 	@Override
 	public String toString() {
 		return "NotificationDto [notificationNo=" + notificationNo + ", notificationTitle=" + notificationTitle

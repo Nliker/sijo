@@ -15,4 +15,8 @@ public interface NotificationMapper {
 	void insertNotificationFile(NotificationFileDto notificationFile) throws SQLException;
 	List<NotificationDto> selectNotification(Map<String, Object> param) throws SQLException;
 	int selectNotificationCount(Map<String, String> param) throws SQLException;
+	NotificationDto selectNotificationByNo(int notificationNo) throws SQLException;
+	void updateNotificationByNo(NotificationDto updateNotification) throws SQLException;
+	void deleteNotificationFile(String deleteId) throws SQLException;
+	int selectNotificationFileMaxPosition(int notificationNo) throws SQLException;
 }

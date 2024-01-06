@@ -54,5 +54,26 @@
 		select count(*) from notifications 
 		where notification_title like concat('%', #{title}, '%')
 	</select>
+	<select id="selectNotificationByNo" parameterType="int" resultMap="notificationMap">
+		select * from notifications 
+		where notification_no=#{notificationNo}
+	</select>
+	<update id="updateNotificationByNo" parameterType="notificationDto">
+		update notifications
+		set notification_title=#{notificationTitle},
+		notification_content=#{notificationContent}
+		where notification_no=#{notificationNo}
+	</update>
+	
+	<select id="selectNotificationFileMaxPosition" parameterType="int" resultType="int">
+		select IFNULL(max(position),0) 
+		from notification_file 
+		where notification_no=#{notificationNo}
+	</select>
+	
+	<delete id="deleteNotificationFile" parameterType="String">
+		delete from notification_file 
+		where file_uri=#{fileUri}
+	</delete>
 	
 </mapper>

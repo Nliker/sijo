@@ -68,15 +68,18 @@ public class NotificationController {
 		return ResponseEntity.ok().body(result);
 	}
 	
-//	@PutMapping("/{notificationyNo}")
-//	public ResponseEntity<Map<String,String>> updateAcademy(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable int notificationNo,@RequestPart NotificationUpdateReqeustDto request,@RequestPart MultipartFile[] addList) throws Exception{
-//		log.debug("Put Academy");
-////		jwtService.validate(access_token);
-//		
-//		notificationService.updateNotification(request,addList,notificationNo);
-//		Map<String,String> result=new HashMap<>();
-//		result.put("result","successful");
-//		return ResponseEntity.ok().body(result);
-//	}
+	@PutMapping("/{notificationNo}")
+	public ResponseEntity<Map<String,String>> updateAcademy(@CookieValue(value = "access_token",required = false) String access_token,@PathVariable int notificationNo,@RequestPart String request,@RequestPart MultipartFile[] addList) throws Exception{
+		log.debug("Put Academy");
+//		jwtService.validate(access_token);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		NotificationUpdateReqeustDto notificationRequest = objectMapper.readValue(request, NotificationUpdateReqeustDto.class);
+		notificationService.updateNotification(notificationRequest,addList,notificationNo);
+		Map<String,String> result=new HashMap<>();
+		
+		result.put("result","successful");
+		return ResponseEntity.ok().body(result);
+	}
 
 }

@@ -16,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.backend.academy.model.AcademyDto;
 import com.backend.academy.model.AcademyResponseDto;
+import com.backend.errorcode.AcademyErrorCode;
+import com.backend.errorcode.NotificationErrorCode;
+import com.backend.exception.AcademyException;
+import com.backend.exception.NotificationException;
 import com.backend.gallery.model.GalleryJoinMediaDto;
 import com.backend.notification.model.NotificationDto;
 import com.backend.notification.model.NotificationFileDto;
@@ -48,15 +52,18 @@ public class NotificationServiceImpl implements NotificationService{
 			notificationFile.setNotificationNo(notification.getNotificationNo());
 			
 			MultipartFile file=files[i];
+			if(file.isEmpty()) {
+				continue;
+			}
 			notificationFile.setFileName(file.getOriginalFilename());
 			notificationFile.setFileUri(s3Service.uploadFile(file));
-			notificationFile.setPosition(i);
+			notificationFile.setPosition(i+1);
 			notificationMapper.insertNotificationFile(notificationFile);
 		}
 	}
 
 	@Override
-	public List<NotificationResponseDto> getNotificationList(Map<String, String> map) throws SQLException {
+	public List<NotificationResponseDto> getNotificationList(Map<String, String> map) throws Exception{
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("start", (Integer.parseInt(map.getOrDefault("page","1"))-1)*notificationDefaultPage);
 		param.put("count",Integer.parseInt(map.getOrDefault("count", String.valueOf(notificationDefaultPage))));
@@ -74,16 +81,39 @@ public class NotificationServiceImpl implements NotificationService{
 	}
 
 	@Override
-	public Integer getNotificationTotalPage(Map<String, String> map) throws SQLException {
+	public Integer getNotificationTotalPage(Map<String, String> map) throws Exception{
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("title", map.getOrDefault("title", ""));
 		return (int) Math.max(Math.ceil(((double)notificationMapper.selectNotificationCount(param))/notificationDefaultPage),1);
 	}
 
 	@Override
-	public void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList, int notificationNo) {
+	public void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList, int notificationNo) throws Exception {
+		NotificationDto notification=notificationMapper.selectNotificationByNo(notificationNo);
+		if(notification==null) {
+			throw new NotificationException(NotificationErrorCode.NotFoundNotification.getCode(),NotificationErrorCode.NotFoundNotification.getDescription());
+		}
+		NotificationDto updateNotification=new NotificationDto(request);
+		updateNotification.setNotificationNo(notificationNo);
+		notificationMapper.updateNotificationByNo(updateNotification);
+		for(String deleteId:request.getDeleteList()) {
+			s3Service.deleteFile(deleteId);
+		}
 		
-		
+		int curMaxPosition=notificationMapper.selectNotificationFileMaxPosition(notificationNo)+1;
+		for(int i=0;i<addList.length;i++) {
+			NotificationFileDto notificationFile=new NotificationFileDto();
+			notificationFile.setNotificationNo(notificationNo);
+			
+			MultipartFile file=addList[i];
+			if(file.isEmpty()) {
+				continue;
+			}
+			notificationFile.setFileName(file.getOriginalFilename());
+			notificationFile.setFileUri(s3Service.uploadFile(file));
+			notificationFile.setPosition(curMaxPosition+i);
+			notificationMapper.insertNotificationFile(notificationFile);
+		}
 	}
 
 }
