@@ -21,6 +21,7 @@ import com.backend.notification.model.NotificationDto;
 import com.backend.notification.model.NotificationFileDto;
 import com.backend.notification.model.NotificationRequestDto;
 import com.backend.notification.model.NotificationResponseDto;
+import com.backend.notification.model.NotificationUpdateReqeustDto;
 import com.backend.notification.model.mapper.NotificationMapper;
 import com.backend.s3.service.S3ServiceImpl;
 
@@ -77,6 +78,12 @@ public class NotificationServiceImpl implements NotificationService{
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("title", map.getOrDefault("title", ""));
 		return (int) Math.max(Math.ceil(((double)notificationMapper.selectNotificationCount(param))/notificationDefaultPage),1);
+	}
+
+	@Override
+	public void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList, int notificationNo) {
+		
+		
 	}
 
 }
