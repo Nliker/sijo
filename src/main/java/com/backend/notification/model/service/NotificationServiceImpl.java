@@ -130,4 +130,17 @@ public class NotificationServiceImpl implements NotificationService{
 		return notificationJoinFile;
 	}
 
+	@Override
+	public void deleteNotification(int notificationNo) throws Exception {
+		NotificationDto notification=notificationMapper.selectNotificationByNo(notificationNo);
+		if(notification==null) {
+			throw new NotificationException(NotificationErrorCode.NotFoundNotification.getCode(),NotificationErrorCode.NotFoundNotification.getDescription());
+		}
+		List<NotificationFileDto> notificationFileList=notificationMapper.selectNotificationFileByNo(notificationNo);
+		for(NotificationFileDto notificationFile:notificationFileList) {
+			s3Service.deleteFile(notificationFile.getFileUri());
+		}
+		notificationMapper.deleteNotification(notificationNo);
+	}
+
 }

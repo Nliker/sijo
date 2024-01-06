@@ -11,6 +11,13 @@
 		<result column="notification_content" property="notificationContent"></result>
 	</resultMap>
 	
+	<resultMap type="notificationFileDto" id="notificationFileMap">
+		<result column="notification_no" property="notificationNo"></result>
+		<result column="position" property="position"></result>
+		<result column="file_uri" property="fileUri"></result>
+		<result column="file_name" property="fileName"></result>
+	</resultMap>
+	
 	<resultMap type="notificationFileDetailDto" id="notificationFileDetailMap">
 		<result column="file_uri" property="fileUri"></result>
 		<result column="file_name" property="fileName"></result>
@@ -98,4 +105,13 @@
 		where n.notification_no=#{notificationNo}
 		order by nf.position;
 	</select>
+	
+	<select id="selectNotificationFileByNo"  parameterType="int" resultMap="notificationFileMap">
+		select * from notification_file 
+		where notification_no=#{notificationNo}
+	</select>
+	<delete id="deleteNotification" parameterType="int">
+		delete from notifications 
+		where notification_no=#{notificationNo}
+	</delete>
 </mapper>

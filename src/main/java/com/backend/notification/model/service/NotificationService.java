@@ -20,4 +20,6 @@ public interface NotificationService {
 	void updateNotification(NotificationUpdateReqeustDto request, MultipartFile[] addList ,int notificationNo) throws Exception;
 
 	NotificationJoinFileDto getNotification(int notificationNo) throws Exception;
+
+	void deleteNotification(int notificationNo)  throws Exception;
 }

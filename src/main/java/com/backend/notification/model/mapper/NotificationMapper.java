@@ -21,4 +21,6 @@ public interface NotificationMapper {
 	void deleteNotificationFile(String deleteId) throws SQLException;
 	int selectNotificationFileMaxPosition(int notificationNo) throws SQLException;
 	NotificationJoinFileDto selectNotificationJoinFileByNo(int notificationNo) throws SQLException;
+	List<NotificationFileDto> selectNotificationFileByNo(int notificationNo) throws SQLException;
+	void deleteNotification(int notificationNo) throws SQLException;
 }
